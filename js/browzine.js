@@ -1,3 +1,5 @@
+// Begin BrowZine - Primo Integration...
+
 // Define Angular module and whitelist URL of server with Node.js script
 var app = angular.module('viewCustom', ['angularLoad'])
   .constant('nodeserver', "https://apiconnector.thirdiron.com/v1/libraries/your_browzine_library_id")
@@ -31,7 +33,6 @@ var app = angular.module('viewCustom', ['angularLoad'])
         }
 
   });
-
 
 // Below is where you can customize the wording that is displayed (as well as the hover over text) for the BrowZine links.
 // St Olaf has chosen "View Journal Contents" for the "Journal Availability Link" but other great options include things such as "View Journal" or "View this Journal"
@@ -70,3 +71,4 @@ app.component('prmSearchResultThumbnailContainerAfter', {
   bindings: { parentCtrl: '<' },
   controller: 'prmSearchResultThumbnailContainerAfterController'
 });
+// End BrowZine - Primo Integration
