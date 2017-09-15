@@ -2,20 +2,20 @@
 
 // Define Angular module and whitelist URL of server with Node.js script
 var app = angular.module('viewCustom', ['angularLoad'])
-  .constant('nodeserver', "https://apiconnector.thirdiron.com/v1/libraries/your_browzine_library_id")
-  .config(['$sceDelegateProvider', 'nodeserver', function ($sceDelegateProvider, nodeserver) {
+  .constant('api', "VISIT THIRD IRON SUPPORT TO REQUEST YOUR LIBRARY API ENDPOINT - http://support.thirdiron.com/")
+  .config(['$sceDelegateProvider', 'api', function ($sceDelegateProvider, api) {
     var urlWhitelist = $sceDelegateProvider.resourceUrlWhitelist();
-    urlWhitelist.push(nodeserver + '**');
+    urlWhitelist.push(api + '**');
     $sceDelegateProvider.resourceUrlWhitelist(urlWhitelist);
 }]);
 
 // Add Article In Context & BrowZine Links
-  app.controller('prmSearchResultAvailabilityLineAfterController', function($scope, $http, nodeserver) {
+  app.controller('prmSearchResultAvailabilityLineAfterController', function($scope, $http, api) {
     var vm = this;
     $scope.book_icon = "https://s3.amazonaws.com/thirdiron-assets/images/integrations/browzine_open_book_icon.png";
     if (vm.parentCtrl.result.pnx.addata.doi && vm.parentCtrl.result.pnx.display.type[0] == 'article')  {
           vm.doi = vm.parentCtrl.result.pnx.addata.doi[0] || '';
-          var articleURL = nodeserver + "/articles?DOI=" + vm.doi;
+          var articleURL = api + "/articles?DOI=" + vm.doi;
           $http.jsonp(articleURL, {jsonpCallbackParam: 'callback'}).then(function(response) {
             $scope.article = response.data;
           }, function(error){
@@ -24,7 +24,7 @@ var app = angular.module('viewCustom', ['angularLoad'])
       }
       if (vm.parentCtrl.result.pnx.addata.issn && vm.parentCtrl.result.pnx.display.type[0] == 'journal')  {
           vm.issn = vm.parentCtrl.result.pnx.addata.issn[0].replace("-", "") || '';
-          var journalURL = nodeserver + "/journals?ISSN=" + vm.issn;
+          var journalURL = api + "/journals?ISSN=" + vm.issn;
           $http.jsonp(journalURL, {jsonpCallbackParam: 'callback'}).then(function(response) {
             $scope.journal = response.data;
           }, function(error){
@@ -46,12 +46,12 @@ app.component('prmSearchResultAvailabilityLineAfter', {
 });
 
 // Add Journal Cover Images from BrowZine
-app.controller('prmSearchResultThumbnailContainerAfterController', function ($scope, $http, nodeserver) {
+app.controller('prmSearchResultThumbnailContainerAfterController', function ($scope, $http, api) {
   var vm = this;
   var newThumbnail = '';
   if (vm.parentCtrl.item.pnx.addata.issn) {
     vm.issn = vm.parentCtrl.item.pnx.addata.issn[0].replace("-", "") || '';
-    var journalURL = nodeserver + "/journals?ISSN=" + vm.issn;
+    var journalURL = api + "/journals?ISSN=" + vm.issn;
     $http.jsonp(journalURL, { jsonpCallbackParam: 'callback' }).then(function (response) {
       if (response.data.data["0"] && response.data.data["0"].browzineEnabled)  {
         newThumbnail = response.data.data["0"].coverImageUrl;
