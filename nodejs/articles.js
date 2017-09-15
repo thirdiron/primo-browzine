@@ -14,7 +14,7 @@ exports.ArticleLookup = function (event, context, callback) {
     var options = {
         host :  'api.thirdiron.com',
         port : 443,
-        path : '/public/v1/libraries/' + browzineLibraryID + '/articles/doi/' + DOI + '?access_token=' + browzineAPIKey,
+        path : '/public/v1/libraries/' + browzineLibraryID + '/articles/doi/' + DOI + '?include=journal&access_token=' + browzineAPIKey,
         method : 'GET'
     };
 
